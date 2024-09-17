@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot 電子郵件範本</title>
+</head>
+<body>
+<h1>今天是<span th:text="${anniversaryName}"></span><span th:text="${anniversaryYear}" style="color: blue"></span>週年</h1>
+<p style="font-size: 25px"> 就在今天<span th:text="${anniversaryDate}" style="font-size: 28px;color: red"></span>，別忘了準備個驚喜唷！</p>
+<p style="font-size: 25px"> 歡迎到<a href="http://127.0.0.1:5174">bunnySugar</a>參考選購</p>
+</body>
+</html>

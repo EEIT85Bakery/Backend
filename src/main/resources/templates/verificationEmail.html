@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>驗證您的電子郵件</title>
+</head>
+<body>
+<h2>親愛的用戶，</h2>
+<p>感謝您註冊Bunny Sugar！</p>
+<p>請使用以下驗證碼來完成您的註冊：</p>
+
+<h3 th:text="${verifyingToken}">[驗證碼]</h3>
+
+<p>此驗證碼將在 <span th:text="${expirationTime}">[過期時間]</span> 過期，請盡快驗證您的電子郵件。</p>
+
+<p>如果您沒有註冊我們的服務，請忽略此郵件。</p>
+
+<p>祝您愉快！</p>
+<p>Bunny Sugar敬上</p>
+</body>
+</html>

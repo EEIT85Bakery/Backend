@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Image with Vue</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+<body>
+
+<div id="app">
+  <h2>Upload Image</h2>
+  <input type="file" @change="handleFileChange" accept="image/*">
+  <button @click="uploadImage">Upload</button>
+  <div v-if="imageUrl">
+    <h3>Uploaded Image:</h3>
+    <img :src="imageUrl" alt="Uploaded Image" style="max-width: 300px;">
+  </div>
+</div>
+
+<script>
+  const { createApp, ref } = Vue;
+
+  createApp({
+    setup() {
+      const selectedFile = ref(null);
+      const imageUrl = ref('');
+
+//把前端傳進來的圖片存進file
+      const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          if (file.size > 5 * 1024 * 1024) {
+            alert("圖片超過5MB");
+            return;
+          }
+          selectedFile.value = file;
+        } else {
+          alert("Please select an image.");
+        }
+      };
+//file轉成base 64格式 上傳圖片
+      const uploadImage = () => {
+        if (selectedFile.value) {
+          const reader = new FileReader();
+          console.log("debug1" + reader.result)
+          reader.onload = () => {
+            const base64String = reader.result.split(',')[1];
+            sendToServer(base64String);
+          };
+          reader.readAsDataURL(selectedFile.value);
+        } else {
+          alert("Please select an image.");
+        }
+      };
+//上傳伺服器 不需要 搭配自己的insert API就好
+<!--      const sendToServer = (base64Image) => {-->
+<!--        fetch('/upload', {-->
+<!--          method: 'POST',-->
+<!--          headers: {-->
+<!--            'Content-Type': 'application/json',-->
+<!--          },-->
+<!--          body: JSON.stringify({ img: base64Image }), // 将字段名设置为 img-->
+<!--        })-->
+<!--        .then((response) => {-->
+<!--          if (response.ok) {-->
+<!--            alert("Image uploaded successfully!");-->
+<!--            fetchImage(); // 上传成功后获取图像-->
+<!--          } else {-->
+<!--            alert("Failed to upload image: " + response.statusText);-->
+<!--          }-->
+<!--        })-->
+<!--        .catch((error) => {-->
+<!--          console.error("Error uploading image:", error);-->
+<!--          alert("An error occurred while uploading the image.");-->
+<!--        });-->
+<!--      };-->
+
+//抓取圖片 轉換格式為base64 顯示在畫面上
+      const fetchImage = () => {
+        fetch('/upload/5') // 假设获取 ID 为 1 的图像ㄍ
+          .then(response => {
+            if (response.ok) {
+              return response.text(); // 获取 Base64 字符串
+            } else {
+              throw new Error('Failed to fetch image');
+            }
+          })
+          .then(data => {
+            imageUrl.value = `data:image/png;base64,${data}`; // 创建可用的图像 URL
+          })
+          .catch(error => {
+            console.error("Error fetching image:", error);
+            alert("An error occurred while fetching the image.");
+          });
+      };
+
+      return {
+        handleFileChange,
+        uploadImage,
+        imageUrl,
+      };
+    },
+  }).mount('#app');
+</script>
+
+</body>
+</html>
