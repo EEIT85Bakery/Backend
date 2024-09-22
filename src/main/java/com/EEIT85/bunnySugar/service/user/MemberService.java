@@ -5,6 +5,8 @@ import com.EEIT85.bunnySugar.dto.users.MemberAdminDto;
 import com.EEIT85.bunnySugar.entity.Users;
 import com.EEIT85.bunnySugar.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,10 +19,10 @@ public class MemberService {
     @Autowired
     private UserRepository userRepository;
 
-    // 查詢所有會員
-    public List<MemberAdminDto> getAllMembers() {
-        List<Users> members = userRepository.findAll();
-        return members.stream().map(this::convertToAdminMemberDto).collect(Collectors.toList());
+    // 查詢所有會員並返回分頁結果
+    public Page<MemberAdminDto> getAllMembers(Pageable pageable) {
+        Page<Users> membersPage = userRepository.findAll(pageable);
+        return membersPage.map(this::convertToAdminMemberDto);  // 使用 map 將 Users 轉換為 AdminMemberDto
     }
 
     // 根據ID查詢會員
