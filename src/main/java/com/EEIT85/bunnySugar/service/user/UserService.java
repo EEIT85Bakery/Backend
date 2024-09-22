@@ -38,34 +38,21 @@ public class UserService {
 
         if (existingUser != null) {
             if (existingUser.getDetailsCompleted() == 1) {
-                return null; // 信箱存在&&資料已完善(等於註冊成功了)，直接return null
+                return null; // 信箱存在且資料已完善，返回 null
             } else {
-                // 他的資料沒完善，直接重新跑流程
-                existingUser.setActive(0);  // 未驗證
+                // 更新未完善資料的用戶
+                existingUser.setActive(0); // 未驗證
                 existingUser.setUpdateTime(LocalDateTime.now());
                 String verifyingToken = String.format("%06d", (int)(Math.random() * 1000000));
                 existingUser.setVerifyingToken(verifyingToken);
                 existingUser.setTokenExpirationTime(LocalDateTime.now().plusMinutes(10));
                 // 更新資料
                 userRepository.save(existingUser);
-            }
-        }
-        if (existingUser != null) {
-            if (existingUser.getDetailsCompleted() == 1) {
-                return null; // 信箱存在&&資料已完善(等於註冊成功了)，直接return null
-            } else {
-                // 他的資料沒完善，直接重新跑流程
-                existingUser.setActive(0);  // 未驗證
-                existingUser.setUpdateTime(LocalDateTime.now());
-                String verifyingToken = String.format("%06d", (int)(Math.random() * 1000000));
-                existingUser.setVerifyingToken(verifyingToken);
-                existingUser.setTokenExpirationTime(LocalDateTime.now().plusMinutes(10));
-                // 更新資料
-                userRepository.save(existingUser);
+                return user; // 返回保存的使用者物件
             }
         }
 
-        user.setActive(0);  // 未驗證(信箱還沒驗證的意思)
+        user.setActive(0); // 未驗證
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
         String verifyingToken = String.format("%06d", (int)(Math.random() * 1000000));
@@ -193,10 +180,10 @@ public class UserService {
 
     // Find user by account
     public Users findByUserAccount(String account) {
-        return userRepository.findByAccount(account); // Ensure this method is present in UserRepository
+        return userRepository.findByAccount(account);
     }
 
     public Users findByUserEmail(String email) {
-        return userRepository.findByEmail(email); // 確保這個方法在 UserRepository 中存在
+        return userRepository.findByEmail(email);
     }
 }
