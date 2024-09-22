@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class MemberAdminService {
@@ -24,12 +25,12 @@ public class MemberAdminService {
     }
 
     // 根據ID查詢會員
-    public MemberAdminDto getMemberById(Long id) {
+    public MemberAdminDto getMemberById(UUID id) {
         return userRepository.findById(id).map(this::convertToAdminMemberDto).orElse(null);
     }
 
     // 更新會員資料
-    public boolean updateMember(Long id, MembeAdminUpdateDto updatedMemberDto) {
+    public boolean updateMember(UUID id, MembeAdminUpdateDto updatedMemberDto) {
         Optional<Users> existingUser = userRepository.findById(id);
         if (existingUser.isPresent()) {
             Users user = existingUser.get();

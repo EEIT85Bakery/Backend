@@ -5,7 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<Users, Long> {
+import java.util.UUID;
+
+public interface UserRepository extends JpaRepository<Users, UUID> {
     Users findByAccount(String account);
     Users findByVerifyingToken(String token);
     Users findByEmail(String email);  // 根據信箱查詢用戶

@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface AnniversariesRepository extends JpaRepository<Anniversaries, Long> {
 
@@ -23,10 +24,10 @@ public interface AnniversariesRepository extends JpaRepository<Anniversaries, Lo
                                      @Param("mailSent") Boolean mailSent,
                                      @Param("createTime") LocalDateTime createTime,
                                      @Param("updateTime") LocalDateTime updateTime,
-                                     @Param("usersId") Long usersId);
+                                     @Param("usersId") UUID usersId);
 
 
-    List<Anniversaries> findByUsersId(Long userId);
+    List<Anniversaries> findByUsersId(UUID userId);
 
-    Optional<Anniversaries> findByIdAndUsersId(Long id, Long usersId);
+    Optional<Anniversaries> findByIdAndUsersId(Long id, UUID usersId);
 }

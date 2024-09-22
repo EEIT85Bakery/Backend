@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @DynamicUpdate
 @Entity
@@ -14,9 +15,8 @@ import java.util.List;
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private UUID id;
 
     @Column(length = 255, nullable = false, name = "email")  // 信箱
     private String email;
@@ -92,7 +92,10 @@ public class Users {
     private WishList wishList;
 
     // Constructors, Getters, Setters...
-    public Users() {}
+
+    public Users() {
+        this.id = UUID.randomUUID(); // 在構造函數中自動生成 UUID
+    }
 
     // 所有參數的構造函數
     public Users(String email, String phone, String verifyingToken, String account, String password, String name,
@@ -101,6 +104,7 @@ public class Users {
                  LocalDateTime createTime, LocalDateTime updateTime, LocalDateTime lastLoginTime,
                  Integer gameTimes, LocalDateTime tokenExpirationTime, Integer detailsCompleted, List<Anniversaries> anniversaries,
                  Cart cart, WishList wishList) {
+        this.id = UUID.randomUUID(); // 在構造函數中自動生成 UUID
         this.email = email;
         this.phone = phone;
         this.verifyingToken = verifyingToken;
@@ -126,11 +130,11 @@ public class Users {
         this.wishList = wishList;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

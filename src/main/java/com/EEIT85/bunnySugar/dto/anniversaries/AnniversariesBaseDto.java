@@ -1,18 +1,19 @@
 package com.EEIT85.bunnySugar.dto.anniversaries;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public abstract class AnniversariesBaseDto {
 
 
     private String anniversaryName;
     private LocalDate anniversaryDate;
-    private Long usersId;
+    private UUID usersId;
 
     public AnniversariesBaseDto() {
     }
 
-    public AnniversariesBaseDto(String anniversaryName, LocalDate anniversaryDate, Long usersId) {
+    public AnniversariesBaseDto(String anniversaryName, LocalDate anniversaryDate, UUID usersId) {
         this.anniversaryName = anniversaryName;
         this.anniversaryDate = anniversaryDate;
         this.usersId = usersId;
@@ -34,11 +35,11 @@ public abstract class AnniversariesBaseDto {
         this.anniversaryDate = anniversaryDate;
     }
 
-    public Long getUsersId() {
+    public UUID getUsersId() {
         return usersId;
     }
 
-    public void setUsersId(Long usersId) {
+    public void setUsersId(UUID usersId) {
         this.usersId = usersId;
     }
 }

@@ -9,35 +9,43 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("/anniversaries")
 @RestController
 public class anniversariesController {
-    Long usersId = 1L;
+
     @Autowired
     AnniversariesService anniversariesService;
 
-    @GetMapping
-    public List<AnniversariesSelectDto> getAllById() {
-        return anniversariesService.getAllById(usersId);
+    // 修改: 添加了 @PathVariable UUID userId 參數
+    @GetMapping("/{userId}")
+    public List<AnniversariesSelectDto> getAllById(@PathVariable UUID userId) {
+        return anniversariesService.getAllById(userId);
     }
 
-    @PostMapping
-    public ResponseEntity<String> insertAnniversaries(@RequestBody AnniversariesInsertDto anniversariesInsertDto) {
-        anniversariesService.insertAnniversaries(anniversariesInsertDto, usersId);
+    // 修改: 添加了 @PathVariable UUID userId 參數
+    @PostMapping("/{userId}")
+    public ResponseEntity<String> insertAnniversaries(@PathVariable UUID userId,
+                                                      @RequestBody AnniversariesInsertDto anniversariesInsertDto) {
+        anniversariesService.insertAnniversaries(anniversariesInsertDto, userId);
         return ResponseEntity.ok("成功新增");
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAnniversaries(@PathVariable Long id) {
-        anniversariesService.deleteAnniversaries(id);
+    // 修改: 添加了 @PathVariable UUID userId 參數
+    @DeleteMapping("/{userId}/{id}")
+    public ResponseEntity<String> deleteAnniversaries(@PathVariable UUID userId,
+                                                      @PathVariable Long id) {
+        anniversariesService.deleteAnniversaries(userId, id);
         return ResponseEntity.ok("成功刪除");
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateAnniversaries(@PathVariable Long id ,
+    // 修改: 添加了 @PathVariable UUID userId 參數
+    @PutMapping("/{userId}/{id}")
+    public ResponseEntity<String> updateAnniversaries(@PathVariable UUID userId,
+                                                      @PathVariable Long id,
                                                       @RequestBody AnniversariesUpdateDto anniversariesUpdateDto) {
-        anniversariesService.updateAnniversaries(id, anniversariesUpdateDto);
+        anniversariesService.updateAnniversaries(userId, id, anniversariesUpdateDto);
         return ResponseEntity.ok("成功更新");
     }
 }

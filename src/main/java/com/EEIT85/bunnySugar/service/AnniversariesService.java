@@ -3,9 +3,7 @@ package com.EEIT85.bunnySugar.service;
 import com.EEIT85.bunnySugar.dto.anniversaries.AnniversariesInsertDto;
 import com.EEIT85.bunnySugar.dto.anniversaries.AnniversariesSelectDto;
 import com.EEIT85.bunnySugar.dto.anniversaries.AnniversariesUpdateDto;
-import com.EEIT85.bunnySugar.dto.products.ProductsSelectDto;
 import com.EEIT85.bunnySugar.entity.Anniversaries;
-import com.EEIT85.bunnySugar.entity.Products;
 import com.EEIT85.bunnySugar.repository.AnniversariesRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -24,6 +22,7 @@ import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -104,7 +103,7 @@ public class AnniversariesService {
 
     @Transactional
     public void insertAnniversaries(AnniversariesInsertDto anniversariesInsertDto,
-                                    Long userId) {
+                                    UUID userId) {
         anniversariesRepository.saveAnniversariesAndUsersId(
                 anniversariesInsertDto.getAnniversaryName(),
                 anniversariesInsertDto.getAnniversaryDate(),
@@ -114,7 +113,7 @@ public class AnniversariesService {
     }
 
 
-    public List<AnniversariesSelectDto> getAllById(Long userId) {
+    public List<AnniversariesSelectDto> getAllById(UUID userId) {
         List<Anniversaries> result = anniversariesRepository.findByUsersId(userId);
         return result.stream()
                 .map(this::mapToDto)
@@ -128,12 +127,12 @@ public class AnniversariesService {
                 anniversaries.getUsers().getId());
     }
 
-    public void deleteAnniversaries(Long id) {
+    public void deleteAnniversaries(UUID userId, Long id) {
          anniversariesRepository.deleteById(id);
     }
 
     @Transactional
-    public void updateAnniversaries(Long id, AnniversariesUpdateDto anniversariesUpdateDto) {
+    public void updateAnniversaries(UUID userId, Long id, AnniversariesUpdateDto anniversariesUpdateDto) {
         // 查詢符合條件的紀念日
         Optional<Anniversaries> optionalAnniversary = anniversariesRepository
                 .findByIdAndUsersId(id, anniversariesUpdateDto.getUsersId());

@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/admin/members")
 public class MemberAdminController {
@@ -31,7 +33,7 @@ public class MemberAdminController {
 
     // 根據ID查詢會員
     @GetMapping("/{id}")
-    public ResponseEntity<MemberAdminDto> getMemberById(@PathVariable Long id) {
+    public ResponseEntity<MemberAdminDto> getMemberById(@PathVariable UUID id) {
         MemberAdminDto member = memberService.getMemberById(id);
         if (member != null) {
             return ResponseEntity.ok(member);
@@ -43,7 +45,7 @@ public class MemberAdminController {
     // 更新會員資料
     @PutMapping("/{id}")
     public ResponseEntity<String> updateMember(
-            @PathVariable Long id, @RequestBody MembeAdminUpdateDto updatedMemberDto) {
+            @PathVariable UUID id, @RequestBody MembeAdminUpdateDto updatedMemberDto) {
         boolean success = memberService.updateMember(id, updatedMemberDto);
         if (success) {
             return ResponseEntity.ok("會員資料更新成功");

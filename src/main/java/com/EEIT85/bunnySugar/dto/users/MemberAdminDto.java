@@ -2,10 +2,11 @@ package com.EEIT85.bunnySugar.dto.users;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class MemberAdminDto {
 
-    private Long id;  // 主键ID
+    private UUID id;  // 主鍵ID
 
     private String account;
 
@@ -48,11 +49,11 @@ public class MemberAdminDto {
     public MemberAdminDto() {
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -207,4 +208,5 @@ public class MemberAdminDto {
     public void setTokenExpirationTime(LocalDateTime tokenExpirationTime) {
         this.tokenExpirationTime = tokenExpirationTime;
     }
+
 }

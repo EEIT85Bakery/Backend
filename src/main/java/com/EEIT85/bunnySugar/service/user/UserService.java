@@ -41,7 +41,27 @@ public class UserService {
                 return null; // 信箱存在&&資料已完善(等於註冊成功了)，直接return null
             } else {
                 // 他的資料沒完善，直接重新跑流程
-                userRepository.delete(existingUser);
+                existingUser.setActive(0);  // 未驗證
+                existingUser.setUpdateTime(LocalDateTime.now());
+                String verifyingToken = String.format("%06d", (int)(Math.random() * 1000000));
+                existingUser.setVerifyingToken(verifyingToken);
+                existingUser.setTokenExpirationTime(LocalDateTime.now().plusMinutes(10));
+                // 更新資料
+                userRepository.save(existingUser);
+            }
+        }
+        if (existingUser != null) {
+            if (existingUser.getDetailsCompleted() == 1) {
+                return null; // 信箱存在&&資料已完善(等於註冊成功了)，直接return null
+            } else {
+                // 他的資料沒完善，直接重新跑流程
+                existingUser.setActive(0);  // 未驗證
+                existingUser.setUpdateTime(LocalDateTime.now());
+                String verifyingToken = String.format("%06d", (int)(Math.random() * 1000000));
+                existingUser.setVerifyingToken(verifyingToken);
+                existingUser.setTokenExpirationTime(LocalDateTime.now().plusMinutes(10));
+                // 更新資料
+                userRepository.save(existingUser);
             }
         }
 
