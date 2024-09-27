@@ -1,28 +1,14 @@
 package com.EEIT85.bunnySugar.service.orders.admin;
 
-import com.EEIT85.bunnySugar.dto.orders.Admin.OrderDetailsAdminSelectDto;
-import com.EEIT85.bunnySugar.dto.orders.Admin.OrderDetailsAdminUpdateDto;
-import com.EEIT85.bunnySugar.dto.orders.Admin.OrdersAdminSelectDto;
-import com.EEIT85.bunnySugar.dto.orders.Admin.OrdersAdminUpdateDto;
-import com.EEIT85.bunnySugar.dto.users.admin.MemberAdminSelectDto;
-import com.EEIT85.bunnySugar.entity.OrderDetails;
-import com.EEIT85.bunnySugar.entity.Orders;
-import com.EEIT85.bunnySugar.entity.Users;
-import com.EEIT85.bunnySugar.exception.OrderNotFoundException;
-import com.EEIT85.bunnySugar.exception.ResourceNotFoundException;
+import com.EEIT85.bunnySugar.dto.orders.Admin.OrdersFullInfoAdminDto;
 import com.EEIT85.bunnySugar.repository.OrderDetailsRepository;
 import com.EEIT85.bunnySugar.repository.OrdersRepository;
 import com.EEIT85.bunnySugar.repository.ProductsRepository;
 import com.EEIT85.bunnySugar.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class OrdersAdminService {
@@ -38,14 +24,11 @@ public class OrdersAdminService {
     @Autowired
     private ProductsRepository productsRepository;
 
-//    // 查詢所有訂單並返回分頁
-//    public List<OrdersAdminSelectDto> getAllOrders(Pageable pageable) {
-//        return ordersRepository.findAllOrdersAdminSelectDto(pageable);
-//    }
-//    public Page<MemberAdminSelectDto> getAllMembers(Pageable pageable) {
-//        return userRepository.findAllMemberAdminSelectDto(pageable);
-//    }
-//
+    // 查詢所有訂單並返回分頁
+    public Page<OrdersFullInfoAdminDto> getAllOrders(Pageable pageable) {
+        return ordersRepository.findAllOrdersAdminSelectDto(pageable);
+    }
+
 //
 //    public OrdersAdminSelectDto getOrderById(Long id) {
 //        Orders order = ordersRepository.findById(id)

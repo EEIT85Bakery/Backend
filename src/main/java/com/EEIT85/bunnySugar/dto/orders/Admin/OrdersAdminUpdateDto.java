@@ -11,11 +11,6 @@ public class OrdersAdminUpdateDto {
     public OrdersAdminUpdateDto() {
     }
 
-    public OrdersAdminUpdateDto(Long id, String pickupStatus, LocalDateTime pickupTime) {
-        this.id = id;
-        this.pickupStatus = pickupStatus;
-    }
-
     public String getPickupStatus() {
         return pickupStatus;
     }
