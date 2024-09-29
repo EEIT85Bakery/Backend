@@ -1,7 +1,7 @@
 package com.EEIT85.bunnySugar.controller.user.admin;
 
-import com.EEIT85.bunnySugar.dto.users.admin.MembeAdminUpdateDto;
-import com.EEIT85.bunnySugar.dto.users.admin.MemberAdminSelectDto;
+import com.EEIT85.bunnySugar.dto.users.admin.MemberAdminUpdateDto;
+import com.EEIT85.bunnySugar.dto.users.admin.MemberAdminDto;
 import com.EEIT85.bunnySugar.service.user.admin.MemberAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,20 +19,20 @@ public class MemberAdminController {
     private MemberAdminService memberAdminService;
 
     // 查詢所有會員並分頁
-    @GetMapping
-    public ResponseEntity<Page<MemberAdminSelectDto>> getAllMembers(
-            @RequestParam(defaultValue = "1") int page,   // 當前的頁碼，預設為第1頁（索引從0開始）
-            @RequestParam(defaultValue = "10") int size   // 每頁顯示的資料數量，默認為10條
+    @PostMapping
+    public ResponseEntity<Page<MemberAdminDto>> getAllMembers(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size
     ) {
-        Pageable pageable = PageRequest.of(page - 1, size); // springboot索引起始為0，實際頁碼起始為1
-        Page<MemberAdminSelectDto> membersPage = memberAdminService.getAllMembers(pageable);
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<MemberAdminDto> membersPage = memberAdminService.getAllMembers(pageable);
         return ResponseEntity.ok(membersPage);
     }
 
     // 根據ID查詢會員
     @GetMapping("/{id}")
-    public ResponseEntity<MemberAdminSelectDto> getMemberById(@PathVariable Long id) {
-        MemberAdminSelectDto member = memberAdminService.getMemberById(id);
+    public ResponseEntity<MemberAdminDto> getMemberById(@PathVariable Long id) {
+        MemberAdminDto member = memberAdminService.getMemberById(id);
         if (member != null) {
             return ResponseEntity.ok(member);
         } else {
@@ -40,13 +40,13 @@ public class MemberAdminController {
         }
     }
 
-    // 更新會員資料
+    // 更新會員的 userVip 屬性
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateMember(
-            @PathVariable Long id, @RequestBody MembeAdminUpdateDto updatedMemberDto) {
-        boolean success = memberAdminService.updateMember(id, updatedMemberDto);
+    public ResponseEntity<String> updateMemberVip(
+            @PathVariable Long id, @RequestBody MemberAdminUpdateDto updatedMemberDto) {
+        boolean success = memberAdminService.updateMemberVip(id, updatedMemberDto);
         if (success) {
-            return ResponseEntity.ok("會員資料更新成功");
+            return ResponseEntity.ok("會員 VIP 資料更新成功");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("會員不存在");
         }

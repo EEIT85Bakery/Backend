@@ -1,27 +1,15 @@
-package com.EEIT85.bunnySugar.dto.users.admin;
+package com.EEIT85.bunnySugar.dto.users.front;
 
 import java.time.LocalDate;
 
-public class MembeAdminUpdateDto {
-
+public class MemberFrontUpdateDto {
     private String name;
     private String gender;
     private String email;
     private String phone;
     private LocalDate birthday;
-
-    public MembeAdminUpdateDto() {
-
-    }
-
-    public MembeAdminUpdateDto(String name, String gender, String email, String phone) {
-        this.name = name;
-        this.gender = gender;
-        this.email = email;
-        this.phone = phone;
-        this.birthday = LocalDate.now();
-
-    }
+    private Integer gameTimes;
+    private Integer bunnyCoin;
 
     public String getName() {
         return name;
@@ -61,5 +49,21 @@ public class MembeAdminUpdateDto {
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+
+    public Integer getGameTimes() {
+        return gameTimes;
+    }
+
+    public void setGameTimes(Integer gameTimes) {
+        this.gameTimes = gameTimes;
+    }
+
+    public Integer getBunnyCoin() {
+        return bunnyCoin;
+    }
+
+    public void setBunnyCoin(Integer bunnyCoin) {
+        this.bunnyCoin = bunnyCoin;
     }
 }

@@ -1,7 +1,7 @@
 package com.EEIT85.bunnySugar.service.user.admin;
 
-import com.EEIT85.bunnySugar.dto.users.admin.MembeAdminUpdateDto;
-import com.EEIT85.bunnySugar.dto.users.admin.MemberAdminSelectDto;
+import com.EEIT85.bunnySugar.dto.users.admin.MemberAdminUpdateDto;
+import com.EEIT85.bunnySugar.dto.users.admin.MemberAdminDto;
 import com.EEIT85.bunnySugar.entity.Users;
 import com.EEIT85.bunnySugar.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,31 +17,25 @@ public class MemberAdminService {
     @Autowired
     private UserRepository userRepository;
 
-    // 使用jpql查詢所有會員並返回分頁結果
-    public Page<MemberAdminSelectDto> getAllMembers(Pageable pageable) {
+    // 查詢所有會員並返回DTO的分頁結果
+    public Page<MemberAdminDto> getAllMembers(Pageable pageable) {
         return userRepository.findAllMemberAdminSelectDto(pageable);
     }
 
-    // 使用jpql根據ID查詢會員
-    public MemberAdminSelectDto getMemberById(Long id) {
+    // 根據ID查詢會員並返回DTO
+    public MemberAdminDto getMemberById(Long id) {
         return userRepository.findMemberAdminSelectDtoById(id);
     }
 
-    // 更新會員資料
-    public boolean updateMember(Long id, MembeAdminUpdateDto updatedMemberDto) {
+    // 更新會員的 userVip
+    public boolean updateMemberVip(Long id, MemberAdminUpdateDto updatedMemberDto) {
         Optional<Users> existingUser = userRepository.findById(id);
         if (existingUser.isPresent()) {
             Users user = existingUser.get();
 
-            // 根據DTO的資料更新會員資料
-            user.setEmail(updatedMemberDto.getEmail() != null ? updatedMemberDto.getEmail() : user.getEmail());
-            user.setName(updatedMemberDto.getName() != null ? updatedMemberDto.getName() : user.getName());
-            user.setPhone(updatedMemberDto.getPhone() != null ? updatedMemberDto.getPhone() : user.getPhone());
-            user.setGender(updatedMemberDto.getGender() != null ? updatedMemberDto.getGender() : user.getGender());
-            user.setBirthday(updatedMemberDto.getBirthday() != null ? updatedMemberDto.getBirthday() : user.getBirthday());
-
-
-            // 更新時間
+            //更新 userVip 屬性
+            user.setUserVip(updatedMemberDto.getUserVip());
+            //更新時間
             user.setUpdateTime(LocalDateTime.now());
 
             userRepository.save(user);
