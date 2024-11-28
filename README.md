@@ -1,0 +1,1 @@
+我們的網站採前後端分離架構，並自學Vue 3搭配BS和Spring Boot，並以MVC及Restful API風格進行開發。線稿圖使用Figma繪製，以暖色調襯托甜點的精緻感。前端使用axios、Vue Router及Pinia進行串接、路由及狀態管理並以元件化方式開發。後端使用JWT及Spring Security搭配JPA並整合第三方API如Google登入及綠界金流，以實現會員註冊、登入及購物車系統，輔以完整的Git Flow並撰寫具規範的commit訊息、駝峰式命名以供後續維護或修改。網站核心功能包含商品、會員、購物車、訂單、折扣碼前後台系統，並加入消費滿額的小遊戲及紀念日信件提醒。
